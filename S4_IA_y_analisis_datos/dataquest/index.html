@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TradeQuest — Teorías del Comercio Internacional</title>
-<meta name="description" content="Juego de competencia y aprendizaje sobre teorías modernas del comercio internacional." />
+<title>DataQuest — La ruta del analista</title>
+<meta name="description" content="Expedición interactiva sobre análisis de datos y fuentes de información en Economía Internacional." />
 <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
   <header class="topbar">
     <div class="brand">
-      <span class="brand-icon">🌐</span>
-      <span class="brand-name">TradeQuest</span>
+      <span class="brand-icon">🧭</span>
+      <span class="brand-name">DataQuest</span>
     </div>
     <div class="topbar-actions">
       <button id="btn-home" class="icon-btn" title="Volver al inicio" aria-label="Volver al inicio">⌂</button>
@@ -25,12 +25,12 @@
     <!-- ========== MENÚ PRINCIPAL ========== -->
     <section id="screen-menu" class="screen active">
       <div class="card menu-card">
-        <h1>Teorías modernas del comercio internacional</h1>
-        <p class="subtitle">Compite, gana puntos y repasa Ciclo del Producto, rezago de imitación, economías de escala y la Nueva Teoría del Comercio.</p>
+        <h1>La ruta del analista económico</h1>
+        <p class="subtitle">Una expedición por el uso responsable de la IA, las fuentes de información confiables y el análisis correcto de cifras. Compite con tu grupo, gana puntos y estrellas, y aprende en el camino.</p>
 
         <label class="field">
-          <span>Tu nombre</span>
-          <input type="text" id="input-name" maxlength="24" placeholder="Ej. DragónTrueno o LibélulaVoraz" autocomplete="off" />
+          <span>Nombre de Fantasía</span>
+          <input type="text" id="input-name" maxlength="24" placeholder="Ej. RositaAzul o ConejitoDuende" autocomplete="off" />
         </label>
 
         <fieldset class="field mode-select">
@@ -39,19 +39,19 @@
             <input type="radio" name="mode" value="competencia" checked />
             <span>
               <strong>🏆 Competencia</strong>
-              <small>Con tiempo, puntos y racha. Tu puntaje entra a la tabla de posiciones.</small>
+              <small>Con tiempo, puntos y racha. Tu resultado entra a la tabla de posiciones del grupo.</small>
             </span>
           </label>
           <label class="mode-option">
             <input type="radio" name="mode" value="estudio" />
             <span>
               <strong>📖 Estudio</strong>
-              <small>Sin tiempo ni vidas. Ideal para repasar con calma antes del examen.</small>
+              <small>Sin tiempo. Ideal para repasar con calma antes de competir.</small>
             </span>
           </label>
         </fieldset>
 
-        <button id="btn-start" class="btn btn-primary btn-lg">Empezar a jugar</button>
+        <button id="btn-start" class="btn btn-primary btn-lg">Comenzar la expedición</button>
 
         <div class="menu-secondary">
           <button id="btn-view-leaderboard" class="btn btn-ghost">Ver tabla de posiciones</button>
@@ -63,25 +63,39 @@
     <!-- ========== REGLAS ========== -->
     <section id="screen-rules" class="screen">
       <div class="card">
-        <h2>¿Cómo se gana puntos?</h2>
+        <h2>¿Cómo funciona la expedición?</h2>
         <ul class="rules-list">
+          <li><strong>3 estaciones (capítulos):</strong> IA responsable, fuentes confiables y análisis de datos. Cada una se desbloquea al terminar la anterior.</li>
           <li><strong>Puntos base según dificultad:</strong> Recordar 100 · Comprender 150 · Aplicar 200 · Analizar 250.</li>
-          <li><strong>Bono por velocidad:</strong> entre más rápido respondas correctamente, más puntos extra ganas (hasta +50%).</li>
-          <li><strong>Bono por racha (combo):</strong> 3 aciertos seguidos = ×1.2 puntos, 6 o más = ×1.5 puntos.</li>
-          <li><strong>Vidas:</strong> en modo Competencia tienes 3 vidas. Una respuesta incorrecta o el tiempo agotado te quita una vida.</li>
-          <li><strong>Aprendizaje:</strong> después de cada pregunta ves la respuesta correcta y una breve explicación, aciertes o falles.</li>
+          <li><strong>Bono por velocidad:</strong> responder rápido en modo Competencia da hasta +50% de puntos extra.</li>
+          <li><strong>Bono por racha:</strong> 3 aciertos seguidos = ×1.2, 6 o más = ×1.5.</li>
+          <li><strong>Estrellas por capítulo:</strong> 100% de aciertos = 3 ⭐ · 70%+ = 2 ⭐ · 40%+ = 1 ⭐. No hay "vidas": siempre completas la expedición.</li>
+          <li><strong>Aprendizaje:</strong> después de cada pregunta ves la respuesta correcta y una breve explicación.</li>
+          <li><strong>Competencia asíncrona:</strong> cada quien juega cuando puede; todos los resultados llegan a la misma tabla de posiciones.</li>
         </ul>
         <button class="btn btn-primary" id="btn-rules-back">Entendido</button>
       </div>
     </section>
 
-    <!-- ========== JUEGO ========== -->
-    <section id="screen-game" class="screen">
+    <!-- ========== MAPA DE EXPEDICIÓN ========== -->
+    <section id="screen-map" class="screen">
+      <div class="map-hud">
+        <div class="hud-item" id="map-hud-player">👤 —</div>
+        <div class="hud-item" id="map-hud-score">⭐ 0 pts</div>
+        <div class="hud-item" id="map-hud-mode">🏆 Competencia</div>
+      </div>
+      <h2 class="map-title">Mapa de la expedición</h2>
+      <p class="subtitle">Avanza estación por estación. Toca el círculo resaltado para continuar.</p>
+      <div id="chapters-wrap" class="chapters-wrap"></div>
+    </section>
+
+    <!-- ========== PREGUNTA ========== -->
+    <section id="screen-question" class="screen">
       <div class="game-hud">
-        <div class="hud-item" id="hud-progress">Pregunta 1/19</div>
+        <div class="hud-item" id="hud-chapter">Estación 1</div>
+        <div class="hud-item" id="hud-progress">Pregunta 1/5</div>
         <div class="hud-item" id="hud-score">⭐ 0 pts</div>
         <div class="hud-item" id="hud-streak">🔥 Racha: 0</div>
-        <div class="hud-item" id="hud-lives">❤️❤️❤️</div>
       </div>
 
       <div class="timer-track"><div id="timer-bar" class="timer-bar"></div></div>
@@ -94,16 +108,28 @@
         <div id="feedback-box" class="feedback-box" hidden>
           <p id="feedback-title"></p>
           <p id="feedback-explanation"></p>
-          <button id="btn-next" class="btn btn-primary">Siguiente pregunta →</button>
+          <button id="btn-next" class="btn btn-primary">Siguiente →</button>
         </div>
       </div>
     </section>
 
-    <!-- ========== RESULTADOS ========== -->
+    <!-- ========== CAPÍTULO COMPLETADO ========== -->
+    <section id="screen-chapter-complete" class="screen">
+      <div class="card chapter-complete-card">
+        <span class="chapter-complete-icon" id="chapter-complete-icon">🧭</span>
+        <h2 id="chapter-complete-title">Estación completada</h2>
+        <div class="stars-display" id="chapter-complete-stars">⭐⭐⭐</div>
+        <p id="chapter-complete-stats" class="subtitle"></p>
+        <button id="btn-chapter-continue" class="btn btn-primary btn-lg">Volver al mapa</button>
+      </div>
+    </section>
+
+    <!-- ========== RESULTADOS FINALES ========== -->
     <section id="screen-result" class="screen">
       <div class="card result-card">
-        <h2 id="result-title">¡Juego terminado!</h2>
+        <h2 id="result-title">¡Expedición completada!</h2>
         <div class="result-score" id="result-score">0 pts</div>
+        <div class="stars-display" id="result-stars">⭐⭐⭐⭐⭐⭐⭐⭐⭐</div>
         <div class="result-stats">
           <div><span id="result-correct">0</span><small>Correctas</small></div>
           <div><span id="result-accuracy">0%</span><small>Precisión</small></div>
@@ -125,11 +151,11 @@
           <h2>🏆 Tabla de posiciones</h2>
           <span id="leaderboard-status" class="status-badge">Conectando…</span>
         </div>
-        <p class="subtitle" id="leaderboard-subtitle">Los resultados se guardan en este navegador. Para armar una tabla de todo el salón, cada estudiante descarga su resultado y la persona docente los importa aquí.</p>
-        <div id="leaderboard-table-wrap">
+        <p class="subtitle" id="leaderboard-subtitle">Competencia asíncrona: cada estudiante juega cuando puede y su resultado aparece aquí solo.</p>
+        <div id="leaderboard-table-wrap" class="leaderboard-table-scroll">
           <table class="leaderboard-table">
             <thead>
-              <tr><th>#</th><th>Nombre</th><th>Puntos</th><th>Precisión</th><th>Fecha</th></tr>
+              <tr><th>#</th><th>Nombre de Fantasía</th><th>Puntos</th><th>Precisión</th><th>⭐</th><th>Fecha</th></tr>
             </thead>
             <tbody id="leaderboard-body"></tbody>
           </table>
@@ -173,7 +199,7 @@
   </div>
 
   <footer class="footer">
-    <p>Práctica gamificada — Economía Internacional · Editable en VS Code · <span id="question-count-footer"></span> preguntas</p>
+    <p>Expedición gamificada — Economía Internacional · Editable en VS Code · <span id="question-count-footer"></span> preguntas en <span id="chapter-count-footer"></span> estaciones</p>
   </footer>
 
   <script src="js/questions.js"></script>
