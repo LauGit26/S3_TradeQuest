@@ -45,6 +45,12 @@
     screens[name].classList.add("active");
   }
 
+  function returnToMenu() {
+    game.stopTimer();
+    game.reset();
+    showScreen("menu");
+  }
+
   document.getElementById("question-count-footer").textContent = QUESTIONS.length;
 
   // ---------- Menú ----------
@@ -59,6 +65,7 @@
 
   document.getElementById("btn-view-rules").addEventListener("click", () => showScreen("rules"));
   document.getElementById("btn-rules-back").addEventListener("click", () => showScreen("menu"));
+  document.getElementById("btn-home").addEventListener("click", returnToMenu);
   document.getElementById("btn-view-leaderboard").addEventListener("click", () => {
     renderLeaderboardTable(latestLeaderboardEntries);
     showScreen("leaderboard");
