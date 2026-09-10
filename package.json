@@ -1,0 +1,13 @@
+{
+  "name": "tradequest-comercio-internacional",
+  "version": "1.0.0",
+  "description": "Juego educativo (HTML/CSS/JS puro) sobre teorías modernas del comercio internacional, para competir en clase y repasar antes del examen.",
+  "private": true,
+  "scripts": {
+    "start": "npx serve .",
+    "deploy": "npx gh-pages -d ."
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
+  }
+}
